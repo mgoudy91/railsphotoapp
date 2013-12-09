@@ -1,0 +1,51 @@
+<b><%= link_to '(Show All Posts)', "posts" %></b>
+
+<table>
+    <tr>
+        <td width="50%" id="contestDetails">
+            <h2>About Photo Contest</h2>
+            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+            <h2>Entry Rules</h2>
+            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+        </td>
+        
+        <td>
+            <table id="posts">
+                <tr>
+                    <h2>Recent Entries</h2>
+                </tr>
+                <% @recent_posts.each do |post| %>
+                    <tr id="post_<%= post.id%>">
+                        <td>
+                            <%= link_to (image_tag post.photo.url(:medium)), post %>
+                            <center><%= post.s_desc %></center>
+                        </td>
+                    
+                        <td>
+                            <h3><b><%= link_to post.title, post %></b></h3>
+                            <p>by <%= post.name %></p>
+                            <p><%= post.l_desc %></p>
+                            <p>
+                                <%= button_to 'Show Details', post, :method => :get %>
+                                <% if user_signed_in? %>
+                                    <% if current_user.vote == nil || current_user.getVoteTitle(current_user.vote) != post.title %>
+                                        <%= button_to "Vote for this entry", :controller => "users", :action => "change_vote", 
+                                            vote: post, :id => current_user.id, :method => :get %>
+                                    <% else %>
+                                        <%= button_tag "You voted for this entry",  :disabled => true %>
+                                    <% end %>
+                                <% else %>
+                                    <%= button_to "Sign in to vote!", new_user_session_path, :method => :get  %>
+                                <% end %>
+                            </p>
+                        </td>
+                    </tr>
+                <% end %>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<br />
+
+<%= link_to 'New Post', new_post_path %>

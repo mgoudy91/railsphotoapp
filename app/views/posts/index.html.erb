@@ -1,0 +1,43 @@
+<center><h1>All Submissions</h1>
+<b><%= link_to '(Home)', "/" %></b></center>
+
+<table id="posts">
+
+    <% @posts.each do |post| %>
+      <tr>
+        <td>
+            <%= link_to (image_tag post.photo.url(:medium)), post %>
+            <center><%= post.s_desc %></center>
+        </td>
+        
+        <td>
+            <h3><b><%= link_to post.title, post %></b></h3>
+            <p>by <%= post.name %></p>
+            <p><%= post.l_desc %></p>
+            <% if user_signed_in? && (current_user.email == post.email)%>
+                <%= link_to 'Edit', edit_post_path(post) %> | 
+                <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+            <% if user_signed_in? %>
+                <% if current_user.vote == nil || current_user.getVoteTitle(current_user.vote) != post.title %>
+                    <%= button_to "Vote for this entry", :controller => "users", :action => "change_vote", 
+                        vote: post, :id => current_user.id, :method => :get%>
+                <% else %>
+                    <%= button_tag "Vote for this entry",  :disabled => true %>
+                <% end %>
+            <% else %>
+                <%= link_to "Sign in to vote!", new_user_session_path  %>
+            <% end %>    
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+        <center><%= paginate @posts %></center>
+    </tr>
+</table>
+
+
+
+<br />
+
+<%= link_to 'New Post', new_post_path %>

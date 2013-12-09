@@ -1,0 +1,26 @@
+Rails Photo Contest
+
+by Mitchell Goudy
+http://mitchellgoudy.com/
+mitchellgoudy@dolphinmicro.com
+
+@ Dolphin Micro Inc
+http://www.dolphinmicro.com/
+
+========================
+
+You can use this project as a starting point for a Rails web application. It requires Rails 3 and uses Devise for user management and authentication, CanCan for authorization, Twitter Bootstrap for CSS styling, and Recurly for recurring billing.
+
+Devise
+http://github.com/plataformatec/devise
+
+ActiveAdmin
+https://github.com/gregbell/active_admin
+
+PaperClip
+https://github.com/thoughtbot/paperclip
+
+Kaminari
+https://github.com/amatsuda/kaminari
+
+________________________
